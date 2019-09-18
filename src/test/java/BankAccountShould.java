@@ -26,4 +26,14 @@ public class BankAccountShould {
         bankAccount.withdraw(withrawnAmount);
         assertEquals(initialCashBalance-withrawnAmount,bankAccount.getCashBalance());
     }
+
+    @Test
+    public void notWithdrawMoreThanCashBalance() {
+        double initialCashBalance = 400.0;
+        double withrawnAmount = 600.0;
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(initialCashBalance);
+        bankAccount.withdraw(withrawnAmount);
+        assertEquals(0, bankAccount.getCashBalance());
+    }
 }

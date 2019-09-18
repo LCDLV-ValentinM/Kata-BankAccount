@@ -14,6 +14,10 @@ public class BankAccount {
     }
 
     public void withdraw(double amount) {
-        cashBalance -= amount;
+        if(cashBalance < amount) {
+            cashBalance = 0;
+        } else {
+            cashBalance -= amount;
+        }
     }
 }
