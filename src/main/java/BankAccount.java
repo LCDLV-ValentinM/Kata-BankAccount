@@ -7,7 +7,7 @@ public class BankAccount {
     private List<String> historyLine;
     private CustomDate operationDate;
 
-    public BankAccount(CustomDate operationDate) {
+    BankAccount(CustomDate operationDate) {
         historyLine = new ArrayList<>();
         this.operationDate = operationDate;
         cashBalance = 0.0;
@@ -36,6 +36,7 @@ public class BankAccount {
         return Collections.unmodifiableList(historyLine);
     }
 
+    //TODO put history responsibility into another class, maybe a decorator
     private void addHistoryLine(OperationType operationType, double amount) {
         historyLine.add(
                 "OperationType:" + operationType + ", "

@@ -10,7 +10,7 @@ public class BankAccountShould {
     private CustomDate operationDate;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         operationDate = new OperationDate();
     }
 
@@ -30,32 +30,31 @@ public class BankAccountShould {
     }
 
     @Test
-    public void haveInitialAmountLessAmountWithdrawed() {
+    public void haveInitialAmountLessAmountWithdrawn() {
         double initialCashBalance = 3000.0;
-        double withrawnAmount = 600.0;
+        double withdrawnAmount = 600.0;
         BankAccount bankAccount = new BankAccount(operationDate);
         bankAccount.deposit(initialCashBalance);
 
-        bankAccount.withdraw(withrawnAmount);
+        bankAccount.withdraw(withdrawnAmount);
 
-        assertEquals(initialCashBalance-withrawnAmount,bankAccount.getCashBalance());
+        assertEquals(initialCashBalance-withdrawnAmount,bankAccount.getCashBalance());
     }
 
     @Test
     public void notWithdrawMoreThanCashBalance() {
         double initialCashBalance = 200.0;
-        double withrawnAmount = 400.0;
+        double withdrawnAmount = 400.0;
         BankAccount bankAccount = new BankAccount(operationDate);
         bankAccount.deposit(initialCashBalance);
 
-        bankAccount.withdraw(withrawnAmount);
+        bankAccount.withdraw(withdrawnAmount);
 
         assertEquals(0, bankAccount.getCashBalance());
     }
 
     @Test
     public void saveTheHistoryOperationTypeWhenADepositIsMade() {
-        double initialCahsBalance = 0.0;
         double amount = 500.0;
         BankAccount bankAccount = new BankAccount(operationDate);
 
