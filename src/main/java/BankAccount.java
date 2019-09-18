@@ -8,4 +8,8 @@ public class BankAccount {
     public double getCashBalance() {
         return cashBalance;
     }
+
+    public void deposit(double amount) {
+        cashBalance += amount;
+    }
 }
