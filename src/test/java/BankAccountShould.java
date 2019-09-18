@@ -1,5 +1,6 @@
 import org.junit.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BankAccountShould {
 
@@ -35,5 +36,14 @@ public class BankAccountShould {
         bankAccount.deposit(initialCashBalance);
         bankAccount.withdraw(withrawnAmount);
         assertEquals(0, bankAccount.getCashBalance());
+    }
+
+    @Test
+    public void saveTheHistoryOperationTypeWhenADepositIsMade() {
+        double initialCahsBalance = 0.0;
+        double amount = 500.0;
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(amount);
+        assertTrue(bankAccount.getHistory().contains("OperationType:Deposit"));
     }
 }
