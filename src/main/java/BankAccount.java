@@ -15,7 +15,8 @@ public class BankAccount {
     public void deposit(double amount) {
         cashBalance += amount;
         historyLine = "OperationType:" + OperationType.DEPOSIT + ", "
-                      + "Date:" + operationDate.now();
+                      + "Date:" + operationDate.now() + ", "
+                      + "Amount:" + amount
         ;
     }
 
