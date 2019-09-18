@@ -1,8 +1,10 @@
 public class BankAccount {
     private double cashBalance;
     private String historyLine;
+    private CustomDate operationDate;
 
-    public BankAccount() {
+    public BankAccount(CustomDate operationDate) {
+        this.operationDate = operationDate;
         cashBalance = 0.0;
     }
 
@@ -12,7 +14,9 @@ public class BankAccount {
 
     public void deposit(double amount) {
         cashBalance += amount;
-        historyLine = "OperationType:" + OperationType.DEPOSIT;
+        historyLine = "OperationType:" + OperationType.DEPOSIT + ", "
+                      + "Date:" + operationDate.now();
+        ;
     }
 
     public void withdraw(double amount) {
