@@ -1,9 +1,14 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class BankAccount {
     private double cashBalance;
-    private String historyLine;
+    private List<String> historyLine;
     private CustomDate operationDate;
 
     public BankAccount(CustomDate operationDate) {
+        historyLine = new ArrayList<>();
         this.operationDate = operationDate;
         cashBalance = 0.0;
     }
@@ -14,11 +19,12 @@ public class BankAccount {
 
     public void deposit(double amount) {
         cashBalance += amount;
-        historyLine = "OperationType:" + OperationType.DEPOSIT + ", "
-                      + "Date:" + operationDate.now() + ", "
-                      + "Amount:" + amount + ", "
-                      + "CashBalance:" + cashBalance
-        ;
+        historyLine.add(
+            "OperationType:" + OperationType.DEPOSIT + ", "
+            + "Date:" + operationDate.now() + ", "
+            + "Amount:" + amount + ", "
+            + "CashBalance:" + cashBalance
+        );
     }
 
     public void withdraw(double amount) {
@@ -29,7 +35,7 @@ public class BankAccount {
         }
     }
 
-    public String getHistory() {
-        return historyLine;
+    public List<String> getHistory() {
+        return Collections.unmodifiableList(historyLine);
     }
 }

@@ -61,7 +61,7 @@ public class BankAccountShould {
 
         bankAccount.deposit(amount);
 
-        assertTrue(bankAccount.getHistory().contains("OperationType:"+OperationType.DEPOSIT));
+        assertTrue(bankAccount.getHistory().get(0).contains("OperationType:"+OperationType.DEPOSIT));
     }
 
     @Test
@@ -74,7 +74,7 @@ public class BankAccountShould {
 
         bankAccount.deposit(amount);
 
-        assertTrue(bankAccount.getHistory().contains("Date:"+operationDateString));
+        assertTrue(bankAccount.getHistory().get(0).contains("Date:"+operationDateString));
     }
 
     @Test
@@ -84,7 +84,7 @@ public class BankAccountShould {
 
         bankAccount.deposit(amount);
 
-        assertTrue(bankAccount.getHistory().contains("Amount:"+amount));
+        assertTrue(bankAccount.getHistory().get(0).contains("Amount:"+amount));
     }
 
     @Test
@@ -95,6 +95,19 @@ public class BankAccountShould {
 
         bankAccount.deposit(depositedAmount);
 
-        assertTrue(bankAccount.getHistory().contains("CashBalance:"+(initialCashBalance+depositedAmount)));
+        assertTrue(bankAccount.getHistory().get(0).contains("CashBalance:"+(initialCashBalance+depositedAmount)));
+    }
+
+    @Test
+    public void saveHistoryOfAllDepositsWhenEachIsDone() {
+        double firstDepositedAmount = 500.0;
+        double secondDepositedAmount = 800.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+
+        bankAccount.deposit(firstDepositedAmount);
+        bankAccount.deposit(secondDepositedAmount);
+
+        assertTrue(bankAccount.getHistory().get(0).contains("OperationType:"+OperationType.DEPOSIT));
+        assertTrue(bankAccount.getHistory().get(1).contains("OperationType:"+OperationType.DEPOSIT));
     }
 }
