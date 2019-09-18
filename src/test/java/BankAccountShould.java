@@ -16,4 +16,14 @@ public class BankAccountShould {
         bankAccount.deposit(amount);
         assertEquals(amount, bankAccount.getCashBalance());
     }
+
+    @Test
+    public void haveInitialAmountLessAmountWithdrawed() {
+        double initialCashBalance = 3000.0;
+        double withrawnAmount = 600.0;
+        BankAccount bankAccount = new BankAccount();
+        bankAccount.deposit(initialCashBalance);
+        bankAccount.withdraw(withrawnAmount);
+        assertEquals(initialCashBalance-withrawnAmount,bankAccount.getCashBalance());
+    }
 }
