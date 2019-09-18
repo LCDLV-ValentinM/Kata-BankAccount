@@ -86,4 +86,15 @@ public class BankAccountShould {
 
         assertTrue(bankAccount.getHistory().contains("Amount:"+amount));
     }
+
+    @Test
+    public void saveTheNewCashBalanceToWhenADepositIsMade() {
+        double depositedAmount = 500.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+        double initialCashBalance = bankAccount.getCashBalance();
+
+        bankAccount.deposit(depositedAmount);
+
+        assertTrue(bankAccount.getHistory().contains("CashBalance:"+(initialCashBalance+depositedAmount)));
+    }
 }
