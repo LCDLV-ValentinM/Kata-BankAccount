@@ -43,8 +43,8 @@ public class BankAccountShould {
 
     @Test
     public void notWithdrawMoreThanCashBalance() {
-        double initialCashBalance = 400.0;
-        double withrawnAmount = 600.0;
+        double initialCashBalance = 200.0;
+        double withrawnAmount = 400.0;
         BankAccount bankAccount = new BankAccount(operationDate);
         bankAccount.deposit(initialCashBalance);
 
@@ -109,5 +109,83 @@ public class BankAccountShould {
 
         assertTrue(bankAccount.getHistory().get(0).contains("OperationType:"+OperationType.DEPOSIT));
         assertTrue(bankAccount.getHistory().get(1).contains("OperationType:"+OperationType.DEPOSIT));
+    }
+
+    @Test
+    public void saveTheHistoryOperationTypeWhenAWithdrawIsMade() {
+        double initialCashBalance = 4000.0;
+        double withdrawnAmount = 600.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+        bankAccount.deposit(initialCashBalance);
+
+        bankAccount.withdraw(withdrawnAmount);
+
+        assertTrue(bankAccount.getHistory().get(1).contains("OperationType:"+OperationType.WITHDRAW));
+    }
+
+    @Test
+    public void saveTheHistoryDateWhenAWithdrawIsMade() {
+        LocalDateTime operationLocalDateTime = LocalDateTime.now();
+        String operationDateString = operationLocalDateTime.toString();
+        CustomDate operationDateMock = new OperationDateMock(operationLocalDateTime);
+        double initialCashBalance = 400.0;
+        double withdrawnAmount = 200.0;
+        BankAccount bankAccount = new BankAccount(operationDateMock);
+        bankAccount.deposit(initialCashBalance);
+
+        bankAccount.withdraw(withdrawnAmount);
+
+        assertTrue(bankAccount.getHistory().get(1).contains("Date:"+operationDateString));
+    }
+
+    @Test
+    public void saveTheAmountInHistoryWhenAWithdrawIsMade() {
+        double initialCashBalance = 8000.0;
+        double withdrawnAmount = 600.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+        bankAccount.deposit(initialCashBalance);
+
+        bankAccount.withdraw(withdrawnAmount);
+
+        assertTrue(bankAccount.getHistory().get(1).contains("Amount:"+withdrawnAmount));
+    }
+
+    @Test
+    public void saveTheNewCashBalanceToWhenAWithdrawIsMade() {
+        double initialCashBalance = 2500.0;
+        double withdrawnAmount = 600.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+        bankAccount.deposit(initialCashBalance);
+
+        bankAccount.withdraw(withdrawnAmount);
+
+        assertTrue(bankAccount.getHistory().get(1).contains("CashBalance:"+(initialCashBalance-withdrawnAmount)));
+    }
+
+    @Test
+    public void saveTheNew0CashBalanceToWhenAWithdrawIsMadeGivenNotEnoughCashBalance() {
+        double initialCashBalance = 100.0;
+        double withdrawnAmount = 300.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+        bankAccount.deposit(initialCashBalance);
+
+        bankAccount.withdraw(withdrawnAmount);
+
+        assertTrue(bankAccount.getHistory().get(1).contains("CashBalance:"+0));
+    }
+
+    @Test
+    public void saveHistoryOfAllWithdrawnWhenEachIsDone() {
+        double firstDepositedAmount = 5000.0;
+        BankAccount bankAccount = new BankAccount(operationDate);
+        bankAccount.deposit(firstDepositedAmount);
+        double firstWithdrawnAmount = 600.0;
+        double secondWithdrawnAmount = 700.0;
+
+        bankAccount.withdraw(firstWithdrawnAmount);
+        bankAccount.withdraw(secondWithdrawnAmount);
+
+        assertTrue(bankAccount.getHistory().get(1).contains("OperationType:"+OperationType.WITHDRAW));
+        assertTrue(bankAccount.getHistory().get(2).contains("OperationType:"+OperationType.WITHDRAW));
     }
 }

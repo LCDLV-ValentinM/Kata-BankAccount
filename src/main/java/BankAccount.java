@@ -19,12 +19,8 @@ public class BankAccount {
 
     public void deposit(double amount) {
         cashBalance += amount;
-        historyLine.add(
-            "OperationType:" + OperationType.DEPOSIT + ", "
-            + "Date:" + operationDate.now() + ", "
-            + "Amount:" + amount + ", "
-            + "CashBalance:" + cashBalance
-        );
+
+        addHistoryLine(OperationType.DEPOSIT, amount);
     }
 
     public void withdraw(double amount) {
@@ -33,9 +29,19 @@ public class BankAccount {
         } else {
             cashBalance -= amount;
         }
+        addHistoryLine(OperationType.WITHDRAW, amount);
     }
 
     public List<String> getHistory() {
         return Collections.unmodifiableList(historyLine);
+    }
+
+    private void addHistoryLine(OperationType operationType, double amount) {
+        historyLine.add(
+                "OperationType:" + operationType + ", "
+                        + "Date:" + operationDate.now() + ", "
+                        + "Amount:" + amount + ", "
+                        + "CashBalance:" + cashBalance
+        );
     }
 }
